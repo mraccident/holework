@@ -2,8 +2,9 @@
 # Simple scons build file
 #
 
-flags = '-Wall -Wno-unused-function'
-libs = 'boost_system boost_iostreams'
+# TODO: avoid hard-coding python include path
+flags = '-Wall -Wno-unused-function -I/usr/include/python2.6'
+libs = 'boost_system boost_iostreams boost_python python2.6'
 
 # Set up environment
 env = Environment()

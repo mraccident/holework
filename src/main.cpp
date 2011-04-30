@@ -20,6 +20,8 @@
 #include <string>
 
 #include <boost/asio.hpp>
+#include <boost/python.hpp>
+#include <boost/python/detail/wrap_python.hpp>
 
 #include "events.h"
 #include "network/tcpserver.h"  
@@ -35,6 +37,21 @@ int main()
     using namespace boost::asio::ip;
     using namespace boostcraft;
     using namespace boostcraft::network;
+
+    namespace py = boost::python;
+
+    // Whee, Python!
+    Py_InitializeEx(0);
+    try {
+        py::object main_module = py::import("__main__");
+        py::object main_namespace = main_module.attr("__dict__");
+        py::exec_file("py/test.py", main_namespace);
+    }
+    catch(py::error_already_set& e)
+    {
+        PyErr_Print();
+    }
+
 
     schedule(3000, test);
 
